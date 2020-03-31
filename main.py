@@ -1,10 +1,14 @@
 import mysql.connector
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 mydb = mysql.connector.connect(
   host="localhost",
-  user="test",
-  passwd="test"
+  user=os.getenv("USER"),
+  passwd=os.getenv("PASSWORD")
 )
 
 mycursor = mydb.cursor()
@@ -27,4 +31,4 @@ product = json_response["products"]
 for item in product:
 	print(item["product_name"])
 
-#print(product)
+# print(product)
