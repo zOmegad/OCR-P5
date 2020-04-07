@@ -4,32 +4,51 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+def database():
+	
+	try:
+		mydb = mysql.connector.connect(
+		  host="localhost",
+		  user=os.getenv("USER"),
+		  passwd=os.getenv("PASSWORD"),
+		  database="prout"
+		)
+		mycursor = mydb.cursor()
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user=os.getenv("USER"),
-  passwd=os.getenv("PASSWORD")
-)
+	except:
+		mydb = mysql.connector.connect(
+		  host="localhost",
+		  user=os.getenv("USER"),
+		  passwd=os.getenv("PASSWORD")
+		)
+		mycursor = mydb.cursor()
+		mycursor.execute("CREATE DATABASE prout")
+	
 
-mycursor = mydb.cursor()
+	# mycursor.execute("CREATE DATABASE food_database")
 
-# mycursor.execute("CREATE DATABASE food_database")
+	mycursor.execute("SHOW DATABASES")
 
-mycursor.execute("SHOW DATABASES")
+	for x in mycursor:
+  		print(x) 
 
-print("Tapez le nom d'un produit :")
-food = input()
 
-response = requests.get('https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&json=true'.format(food))
+def menu():
+	print("Tapez le nom d'un produit :")
+	food = input()
 
-json_response = response.json()
+	response = requests.get('https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&json=true'.format(food))
 
-product = json_response["products"]
+	json_response = response.json()
 
-for item in product:
-	print("nom: " + item["product_name_fr"])
-	print("categorie: " + item["compared_to_category"])
-	print("indice gras: " + str(item["nutriscore_data"]["saturated_fat_points"]))
-	print("indice sucre: " + str(item["nutriscore_data"]["sugars_points"]))
-	print("indice sel: " + item["nutrient_levels"]["salt"])
-	print("                ")
+	product = json_response["products"]
+
+	for item in product:
+		print("nom: " + item["product_name_fr"])
+		print("categorie: " + item["compared_to_category"])
+		print("indice gras: " + str(item["nutriscore_data"]["saturated_fat_points"]))
+		print("indice sucre: " + str(item["nutriscore_data"]["sugars_points"]))
+		print("indice sel: " + item["nutrient_levels"]["salt"])
+		print("                ")
+
+database()
