@@ -25,26 +25,6 @@ def database_food_insertion(food_name, food_nutriscore, category_id):
 	mydb.commit()
 	print("Ajout de {}".format(food_name))
 
-
-def menu():
-	print("Tapez le nom d'un produit :")
-	food = input()
-
-	response = requests.get('https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&page_size=100&json=true'.format(food))
-
-	json_response = response.json()
-
-	product = json_response["products"]
-
-	for item in product:
-		print("nom: " + item["product_name"])
-		print("categorie: " + item["compared_to_category"])
-		#print("indice gras: " + str(item["nutriscore_data"]["saturated_fat_points"]))
-		print("nutriscore: " + str(item["nutriscore_data"]["score"]))
-		#print("indice sucre: " + str(item["nutriscore_data"]["sugars_points"]))
-		#print("indice sel: " + item["nutrient_levels"]["salt"])
-		print("                ")
-
 def database_setup():
 	category_link = requests.get('https://fr.openfoodfacts.org/categories.json')
 	json_category = category_link.json()
