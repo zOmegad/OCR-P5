@@ -14,6 +14,6 @@ You need pyhton3 and pip installed
 
 ## Usage
 
-Naviagate threw the application using numbers. 
+Naviagate through the application using numbers. 
 
 
