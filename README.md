@@ -5,6 +5,8 @@ An openclassroom project built with python and Openfoodfact API. The application
 You need pyhton3 and pip installed
 [Install Python3](https://realpython.com/installing-python/)
 
+[MySQL](https://www.mysql.com/downloads/)
+
 ## Installation
     pip install -r requirements.txt
 
